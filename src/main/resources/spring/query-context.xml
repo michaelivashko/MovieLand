@@ -4,14 +4,53 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="getAllMovies" class="java.lang.String">
-        <constructor-arg value="SELECT t1.id, t1.name name_rus, t1.name_original name_eng, t1.release_year year, t1.rating,
+    <bean id="queryGetAllMovie" class="java.lang.String">
+        <constructor-arg value=
+        "SELECT t1.id,
+          t1.name name_rus,
+          t1.name_original name_eng,
+          t1.release_year year,
+          t1.rating,
         GROUP_CONCAT(DISTINCT t3.name ORDER BY t3.id DESC SEPARATOR ',') genres
         FROM movie t1
         LEFT JOIN movie_genre t2
         ON t1.id = t2.movie_id
         LEFT JOIN genre t3
         ON t2.genre_id = t3.id
-        GROUP BY t1.id, t1.name, t1.name_original, t1.release_year, t1.rating;"/>
+        GROUP BY t1.id,
+         t1.name,
+         t1.name_original,
+         t1.release_year,
+         t1.rating;"/>
     </bean>
+
+    <bean id="queryGetMoviesById" class="java.lang.String">
+        <constructor-arg value=
+       "select  m.name name_rus,
+		m.name_original name_eng,
+		m.description,
+		m.release_year year,
+		rating,
+		group_concat(g.name separator ', ') as genres,
+		group_concat(distinct co.name separator ', ') as countries
+        from movie m
+        join movie_genre gm
+        on m.id = gm.movie_id
+        join genre g
+        on gm.genre_id = g.id
+        join movie_country cm
+        on m.id = cm.movie_id
+        join country co
+        on co.id = cm.country_id
+        where m.id = ?
+        group by 1,2,3,4,5;"/>
+    </bean>
+
+    <bean id="queryGetReviewById" class="java.lang.String">
+        <constructor-arg value="select text
+                                from review
+                                where movie_id = ?"/>
+    </bean>
+
+
 </beans>

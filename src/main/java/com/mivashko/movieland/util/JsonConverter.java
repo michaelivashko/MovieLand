@@ -35,6 +35,11 @@ public class JsonConverter {
         return stringBuilder.toString();
     }
 
+    public String verboseJson (Movie movie){
+    return " ";
+    }
+
+
     private String addQuotes(Object value) {
         return "\"" + value + "\"";
     }

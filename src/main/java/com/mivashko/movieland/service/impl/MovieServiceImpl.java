@@ -17,7 +17,10 @@ public class MovieServiceImpl implements MovieService {
         return movieDao.getAll();
     }
 
-  /*  public Movie getMovieById(int id) {
-         return new Movie(); }*/
-
+    public Movie getMovieById(int movieId) {
+        Movie movie = movieDao.getMovieById(movieId);
+        List<String> reviews = movieDao.getReviewById(movieId);
+        movie.setReviewList(reviews);
+         return  movie;   // addd review
+    }
 }

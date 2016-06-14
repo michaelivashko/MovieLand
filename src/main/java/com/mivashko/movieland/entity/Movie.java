@@ -13,6 +13,7 @@ public class Movie {
     private double price;
     private List<String> genres;
     private List<String> countries;
+    private List<String> reviewList;
 
     public List<String> getGenres() {
         return genres;
@@ -101,5 +102,9 @@ public class Movie {
                 '}';
     }
 
+
+    public void setReviewList(List<String> reviewList) {
+        this.reviewList = reviewList;
+    }
 
 }

@@ -7,4 +7,6 @@ import java.util.List;
 public interface MovieService {
 
     List<Movie> getAll();
+    Movie getMovieById(int movieId);
 }
+

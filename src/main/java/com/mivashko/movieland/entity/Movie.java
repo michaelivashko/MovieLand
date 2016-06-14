@@ -5,9 +5,9 @@ import java.util.List;
 public class Movie {
 
     private int id;
-    private String name;
-    private String nameOriginal;
-    private int releaseYear;
+    private String nameRus;
+    private String nameEng;
+    private int year;
     private String description;
     private double rating;
     private double price;
@@ -31,27 +31,27 @@ public class Movie {
     }
 
     public String getName() {
-        return name;
+        return nameRus;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNameRus(String nameRus) {
+        this.nameRus = nameRus;
     }
 
-    public String getNameOriginal() {
-        return nameOriginal;
+    public String getNameEng() {
+        return nameEng;
     }
 
-    public void setNameOriginal(String nameOriginal) {
-        this.nameOriginal = nameOriginal;
+    public void setNameEng(String nameEng) {
+        this.nameEng = nameEng;
     }
 
-    public int getReleaseYear() {
-        return releaseYear;
+    public int getYear() {
+        return year;
     }
 
-    public void setReleaseYear(int releaseYear) {
-        this.releaseYear = releaseYear;
+    public void setYear(int year) {
+        this.year = year;
     }
 
     public String getDescription() {
@@ -90,9 +90,9 @@ public class Movie {
     public String toString() {
         return "Movie{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
-                ", nameOriginal='" + nameOriginal + '\'' +
-                ", releaseYear=" + releaseYear +
+                ", name='" + nameRus + '\'' +
+                ", nameOriginal='" + nameEng + '\'' +
+                ", releaseYear=" + year +
                 ", description='" + description + '\'' +
                 ", rating=" + rating +
                 ", price=" + price +
@@ -100,4 +100,6 @@ public class Movie {
                 ", countries='" + countries + '\'' +
                 '}';
     }
+
+
 }

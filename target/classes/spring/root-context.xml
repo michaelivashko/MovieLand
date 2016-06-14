@@ -25,6 +25,6 @@
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
         <property name="url" value="jdbc:mysql://localhost:3306/movieland"/>
         <property name="username" value="root"/>
-        <property name="password" value="Zeppel1n42"/>
+        <property name="password" value="admin"/>
     </bean>
 </beans>

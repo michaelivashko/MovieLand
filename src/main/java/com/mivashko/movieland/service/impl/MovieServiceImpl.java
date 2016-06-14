@@ -16,4 +16,8 @@ public class MovieServiceImpl implements MovieService {
     public List<Movie> getAll() {
         return movieDao.getAll();
     }
+
+  /*  public Movie getMovieById(int id) {
+         return new Movie(); }*/
+
 }

@@ -18,15 +18,12 @@ public class MovieDaoImpl implements MovieDao {
     private JdbcTemplate jdbcTemplate;
 
     @Autowired
-    private String getAllMovies;
+    private String queryGetAllMovie;
 
     private final MovieRowMapper movieRowMapper = new MovieRowMapper();
 
     public List<Movie> getAll() {
-        log.info("Started query to get all movies from database");
-        long startTime = System.currentTimeMillis();
-        List<Movie> movieList =  jdbcTemplate.query(getAllMovies, movieRowMapper);
-        log.info("Finished query to get all movies from database. It took {} ms", System.currentTimeMillis() - startTime);
+        List<Movie> movieList =  jdbcTemplate.query(queryGetAllMovie, movieRowMapper);
         return movieList;
     }
 }

@@ -2,6 +2,7 @@ package com.mivashko.movieland.dao.impl;
 
 import com.mivashko.movieland.dao.MovieDao;
 import com.mivashko.movieland.dao.impl.mapper.MovieRowMapper;
+import com.mivashko.movieland.dao.impl.mapper.VerboseMovieRowMapper;
 import com.mivashko.movieland.entity.Movie;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,10 +21,27 @@ public class MovieDaoImpl implements MovieDao {
     @Autowired
     private String queryGetAllMovie;
 
+    @Autowired
+    private String queryGetMoviesById;
+
+    @Autowired
+    private String queryGetReviewById;
+
     private final MovieRowMapper movieRowMapper = new MovieRowMapper();
 
     public List<Movie> getAll() {
-        List<Movie> movieList =  jdbcTemplate.query(queryGetAllMovie, movieRowMapper);
-        return movieList;
+      //  List<Movie> movieList =  jdbcTemplate.query(queryGetAllMovie, movieRowMapper);
+        return jdbcTemplate.query(queryGetAllMovie, movieRowMapper);
     }
+
+    @Override
+    public Movie getMovieById(int id) {
+         return jdbcTemplate.queryForObject(queryGetMoviesById, new Object[]{id}, new VerboseMovieRowMapper());
+    }
+
+    @Override
+    public List<String> getReviewById(int id) {
+        return jdbcTemplate.queryForList(queryGetReviewById, new Object[]{id}, String.class);
+    }
+
 }

@@ -28,7 +28,7 @@ public class MovieController {
     @ResponseBody
     public String getAllMovies() {
         List<Movie> movies = movieService.getAll();
-        return jsonConverter.JsonManualConverter(movies);
+        return jsonConverter.toJson(movies);
     }
 
     @RequestMapping(value = "/{movieId}", produces = "text/plain;charset=UTF-8")

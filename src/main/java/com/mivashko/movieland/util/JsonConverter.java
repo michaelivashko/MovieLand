@@ -3,18 +3,54 @@ import com.mivashko.movieland.entity.Movie;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import java.util.ArrayList;
 import java.util.List;
-import org.json.simple.JSONObject;
+
 
 @Service
 public class JsonConverter {
-    public String toSimpleJson(Movie movie){
+          public JsonObject toSimpleJson(Movie movie){
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.addProperty("nameRus", movie.getNameRus());
+            jsonObject.addProperty("nameEng", movie.getNameEng());
+              jsonObject.addProperty("year", movie.getYear());
+            jsonObject.addProperty("rating", movie.getRating());
+            jsonObject.addProperty("genre", String.valueOf(movie.getGenres()));
+            return jsonObject;
+        }
+
+    public String toVerboseJson(Movie movie) {
+        Gson gson = new Gson();
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("nameRus", movie.getNameRus());
+        jsonObject.addProperty("nameEng", movie.getNameEng());
+        jsonObject.addProperty("year", movie.getYear());
+        jsonObject.addProperty("country",  String.valueOf(movie.getCountries()));
+        jsonObject.addProperty("genre", String.valueOf(movie.getGenres()));
+        jsonObject.addProperty("description", movie.getDescription());
+        jsonObject.addProperty("reviews", String.valueOf(movie.getReviewList()));
+        return gson.toJson(jsonObject);
+    }
+
+    public String toJson(List<Movie> movies) {
+        Gson gson = new Gson();
+        List<JsonObject> list = new ArrayList<>();
+        for (Movie movie : movies) {
+            list.add(toSimpleJson(movie));
+        }
+        return gson.toJson(list);
+    }
+
+     /*
         JSONObject json = new JSONObject();
-        json.put("rusName", movie.getNameRus());
-        json.put("engName", movie.getNameEng());
-        json.put("year", movie.getYear());
+
+        json.("genre", String.valueOf(movie.getGenres()));
         json.put("rating", movie.getRating());
-        json.put("genre", String.valueOf(movie.getGenres()));
+        json.put("year", movie.getYear());
+        json.put("engName", movie.getNameEng());
+        json.put("rusName", movie.getNameRus());
         return json.toJSONString();
     }
     public String toVerboseJson(Movie movie){
@@ -66,5 +102,5 @@ public class JsonConverter {
     private String addQuotes(Object value) {
         return "\"" + value + "\"";
     }
-
+*/
 }

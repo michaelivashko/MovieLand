@@ -12,17 +12,17 @@ public class JsonConverterTest {
 
     @Test
     public void toVerboseJsonTest(){
-        String expectedJson = "{\"NameRus\":\"????\",\"Name???\":\"Film\",\"year\":2016,\"country\":\"[Countries]\",\"genre\":\"[Genre1, Genre2]\",\"description\":\"????????\",\"reviews\":\"[????\", \"???? ???]\"}";
+        String expectedJson = "{\"nameRus\":\"Film\",\"nameEng\":\"Film\",\"year\":2016,\"genre\":\"[Genre1, Genre2]\"}";
         Movie movie = new Movie();
         JsonConverter json = new JsonConverter();
-        movie.setNameRus("????");
+        movie.setNameRus("Film");
         movie.setNameEng("Film");
         movie.setYear(2016);
-        movie.setRating(1.3);
+      //  movie.setRating(1.3);
         movie.setGenres(Arrays.asList("Genre1", "Genre2"));
-        movie.setDescription("????????");
+       // movie.setDescription("description");
         movie.setCountries(Arrays.asList("Countries"));
-        movie.setReviewList(Arrays.asList("????", "???? ???"));
-        assertEquals(expectedJson, json.toVerboseJson(movie));
+        movie.setReviewList(Arrays.asList("r1", "r1"));
+        assertEquals(expectedJson, json.toSimpleJson(movie));
     }
 }

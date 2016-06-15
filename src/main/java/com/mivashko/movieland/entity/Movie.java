@@ -23,17 +23,11 @@ public class Movie {
         this.genres = genres;
     }
 
-    public int getId() {
-        return id;
-    }
+    public int getId() { return id;}
 
-    public void setId(int id) {
-        this.id = id;
-    }
+    public void setId(int id) { this.id = id; }
 
-    public String getName() {
-        return nameRus;
-    }
+    public String getNameRus() {return nameRus; }
 
     public void setNameRus(String nameRus) {
         this.nameRus = nameRus;
@@ -75,9 +69,9 @@ public class Movie {
         return price;
     }
 
-    public void setPrice(double price) {
+ /*   public void setPrice(double price) {
         this.price = price;
-    }
+    }*/
 
     public List<String> getCountries() {
         return countries;
@@ -86,7 +80,12 @@ public class Movie {
     public void setCountries(List<String> countries) {
         this.countries = countries;
     }
-
+    public void setReviewList(List<String> reviewList) {
+        this.reviewList = reviewList;
+    }
+    public List<String> getReviewList() {
+        return reviewList;
+    }
     @Override
     public String toString() {
         return "Movie{" +
@@ -103,8 +102,5 @@ public class Movie {
     }
 
 
-    public void setReviewList(List<String> reviewList) {
-        this.reviewList = reviewList;
-    }
 
 }

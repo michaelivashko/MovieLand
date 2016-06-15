@@ -28,16 +28,13 @@ public class MovieController {
     @ResponseBody
     public String getAllMovies() {
         List<Movie> movies = movieService.getAll();
-        String json = jsonConverter.JsonManualConverter (movies);
-        return json;
+        return jsonConverter.JsonManualConverter(movies);
     }
 
     @RequestMapping(value = "/{movieId}", produces = "text/plain;charset=UTF-8")
     @ResponseBody
     public String getMoviesById(@PathVariable("movieId") int movieId) {
-        List<Movie> movies = movieService.getAll();
         Movie movie = movieService.getMovieById(movieId);
-        String json = jsonConverter.verboseJson (movie);
-        return json;
+        return jsonConverter.toVerboseJson(movie);
     }
 }

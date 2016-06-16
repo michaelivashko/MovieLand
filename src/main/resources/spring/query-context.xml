@@ -47,11 +47,13 @@
         group by 1,2,3,4,5;"/>
     </bean>
 
-    <bean id="queryGetReviewById" class="java.lang.String">
-        <constructor-arg value="select text
-                                from review
-                                where movie_id = ?"/>
-    </bean>
 
+    <bean id="queryGetReviewById" class="java.lang.String">
+        <constructor-arg value="SELECT t1.id, t1.movie_id, t1.user_id, t1.text, t2.first_name, t2.last_name
+        FROM review t1
+        join user t2
+        on t1.user_id = t2.id
+        WHERE t1.movie_id = ?;"/>
+    </bean>
 
 </beans>

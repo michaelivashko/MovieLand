@@ -33,13 +33,4 @@ public class ReviewRowMapper implements RowMapper<Review> {
 
         return review;
     }
-
-
-    public Review mapRow_ (ResultSet resultSet, int i) throws SQLException {
-        Review review = new Review();
-        review.setId(resultSet.getInt("id"));
-        review.setText(resultSet.getString("description"));
-        return review;
-    }
-
 }

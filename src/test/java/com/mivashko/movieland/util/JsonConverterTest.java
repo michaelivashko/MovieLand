@@ -2,7 +2,9 @@ package com.mivashko.movieland.util;
 
 import com.mivashko.movieland.entity.Movie;
 import com.mivashko.movieland.entity.Review;
+import com.mivashko.movieland.entity.SqlParam;
 import com.mivashko.movieland.entity.User;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -11,8 +13,24 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 
 public class JsonConverterTest {
+    private static JsonConverter jsonConverter;
 
-    @Test
+    @BeforeClass
+    public static void setUp() {
+        jsonConverter = new JsonConverter();
+    }
+
+
+  @Test
+  public void testParseSearchParams() {
+      String json = "{\"genre\": \"ggg\", \"country\": \"США\", \"rusName\": \"Test\", \"engName\": \"Test\", \"year\": \"1666\"}";
+      SqlParam params = jsonConverter.parse(json);
+      assertEquals(params.getGenre(), "ggg");
+      assertEquals(params.getCountry(), "США");
+      assertEquals(params.getRusName(), "Test");
+      assertEquals(params.getEngName(), "Test");
+  }
+      @Test
     public void toVerboseJsonTest(){
         String expectedJson = "{\"nameRus\":\"1\",\"nameEng\":\"1\",\"year\":1,\"rating\":1.3,\"genre\":\"[1, 1]\"}";
         Movie movie = new Movie();
@@ -39,5 +57,15 @@ public class JsonConverterTest {
        // movie.setReviewList(Arrays.asList("1", "1"));
         assertEquals(expectedJson, json.toSimpleJson(movie).toString());
     }
+
+
+
+
+
+
+
+
+
+
 
 }

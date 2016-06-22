@@ -48,7 +48,7 @@ public class MovieDaoImpl implements MovieDao {
         sqlParam.setRatingOrder(ratingOrder);
         sqlParam.setPriceOrder(priceOrder);
         List<Movie> movies = daoService.executeNamedQuery(QueryBuilder.buildQueryWithSorting(
-                            QUERY_GET_ALL_MOVIE, sqlParam), new HashMap<>(), movieRowMapper);
+                QUERY_GET_ALL_MOVIE, sqlParam), new HashMap<>(), movieRowMapper);
         log.info("Finish query for getting  all movie from DB");
         return movies;
     }
@@ -69,7 +69,9 @@ public class MovieDaoImpl implements MovieDao {
     public List<Movie> search(SqlParam sqlParam) throws Exception {
         log.info("Start query for search movies");
         MapSqlParameterSource parameter = new MapSqlParameterSource();
+       // if (sqlParam.getEngName()!=null) {
         parameter.addValue("name_original", sqlParam.getEngName());
+       // if (sqlParam.getYear()!=null) {
         parameter.addValue("release_year", sqlParam.getYear());
         List<Movie> movieList = daoService.executeNamedQuery(queryGetBySearchParam, parameter, movieRowMapper);
         log.info("Finish query for search movie");

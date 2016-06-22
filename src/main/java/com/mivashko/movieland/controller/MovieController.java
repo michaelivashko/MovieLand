@@ -1,7 +1,7 @@
 package com.mivashko.movieland.controller;
 
 import com.mivashko.movieland.entity.Movie;
-import com.mivashko.movieland.entity.Search;
+import com.mivashko.movieland.entity.SqlParam;
 import com.mivashko.movieland.service.MovieService;
 import com.mivashko.movieland.util.JsonConverter;
 import org.slf4j.Logger;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping("/v1/movies")
+@RequestMapping("/v1")
 public class MovieController {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
@@ -25,32 +25,31 @@ public class MovieController {
     @Autowired
     private JsonConverter jsonConverter;
 
-    @RequestMapping(produces = "application/json; charset=UTF-8")
+    @RequestMapping(value = "/movies", produces = "application/json; charset=UTF-8")
     @ResponseBody
-    public String getAllMovies() {
-        List<Movie> movies = movieService.getAll();
-        return jsonConverter.toJson(movies);
-    }
+    public ResponseEntity<String> getAllMovies(
+            @RequestParam(value = "rating", required = false) String ratingOrder,
+            @RequestParam(value = "price", required = false) String priceOrder) throws Exception {
+        log.info("Start request for all movies");
 
-    public ResponseEntity<String> getAllMovies(@RequestParam(value = "rating", required = false) String ratingOrder,
-                                               @RequestParam(value = "price", required = false) String priceOrder) {
-        List<Movie> movies = movieService.getAll();
+        List<Movie> movies = movieService.getAll(ratingOrder, priceOrder);
         String json = jsonConverter.toJson(movies);
-        return movies.isEmpty()? new ResponseEntity<>(json, HttpStatus.OK)
-                : new ResponseEntity<>("Movies missing in the database", HttpStatus.NO_CONTENT);
+        return movies.isEmpty()? new ResponseEntity<>("Movies missing in the database",
+                HttpStatus.NO_CONTENT) :
+                new ResponseEntity<>(json, HttpStatus.OK );
     }
 
-    @RequestMapping(value = "/{movieId}", produces = "text/plain;charset=UTF-8")
+    @RequestMapping(value = "/movies/{movieId}", method = RequestMethod.GET, produces = "text/plain;charset=UTF-8")
     @ResponseBody
-    public String getMoviesById(@PathVariable("movieId") int movieId) {
+    public String getMoviesById(@PathVariable("movieId") int movieId) throws Exception {
         Movie movie = movieService.getMovieById(movieId);
         return jsonConverter.toVerboseJson(movie);
     }
 
-    @RequestMapping(value = "/search", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
+    @RequestMapping(value = "/movies/search", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
     @ResponseBody
-    public ResponseEntity<String> searchMovies(@RequestBody String json) {
-        Search searchParams = jsonConverter.parse(json);
+    public ResponseEntity<String> searchMovies(@RequestBody String json) throws Exception {
+        SqlParam searchParams = jsonConverter.parse(json);
         List<Movie> movies = movieService.search(searchParams);
         if (movies.isEmpty()) {
             return new ResponseEntity<>("Movies not found", HttpStatus.NO_CONTENT);         }

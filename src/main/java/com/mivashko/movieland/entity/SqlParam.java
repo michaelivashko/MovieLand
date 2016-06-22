@@ -1,11 +1,13 @@
 package com.mivashko.movieland.entity;
 
-public class Search {
+public class SqlParam {
     private String rusName;
     private String engName;
     private String year;
     private String country;
     private String genre;
+    private String ratingOrder;
+    private String priceOrder;
 
     public String getRusName() {
         return rusName;
@@ -47,7 +49,22 @@ public class Search {
         this.genre = genre;
     }
 
+    public void setRatingOrder(String ratingOrder) {
+        this.ratingOrder = ratingOrder;
+    }
+    public void setPriceOrder(String priceOrder) {
+        this.priceOrder = priceOrder;
+    }
+
     public boolean isEmpty() {
         return (rusName == null) && (engName == null) && (year == null) && (country == null) && (genre == null);
+    }
+
+    public String getRatingOrder() {
+        return ratingOrder;
+    }
+
+    public String getPriceOrder() {
+        return priceOrder;
     }
 }

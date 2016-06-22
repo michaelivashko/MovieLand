@@ -1,6 +1,6 @@
 package com.mivashko.movieland.util;
 import com.mivashko.movieland.entity.Movie;
-import com.mivashko.movieland.entity.Search;
+import com.mivashko.movieland.entity.SqlParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -44,9 +44,9 @@ public class JsonConverter {
         } return gson.toJson(list);
     }
 
-    public Search parse (String json) {
+    public SqlParam parse (String json) {
         Gson gson = new Gson();
-        try {   return gson.fromJson(json, Search.class);
+        try {   return gson.fromJson(json, SqlParam.class);
         } catch (Exception e) { throw e; }
     }
 

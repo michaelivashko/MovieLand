@@ -1,5 +1,6 @@
-package com.mivashko.movieland.dao;
+package com.mivashko.movieland.dao.impl;
 
+import com.mivashko.movieland.dao.DaoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,21 @@ public class DaoServiceImpl implements DaoService {
     private NamedParameterJdbcTemplate jdbcTemplate;
 
     @Override
+    public <T> T executeNamedQueryForSingleResult(String query, MapSqlParameterSource namedParameters, RowMapper<T> rowMapper) throws Exception {
+        return jdbcTemplate.queryForObject(query, namedParameters, rowMapper);
+    }
+
+    @Override
+    public <T> List<T> executeNamedQuery(String query, MapSqlParameterSource namedParameters, RowMapper<T> rowMapper) throws Exception {
+        return jdbcTemplate.query(query, namedParameters, rowMapper);
+    }
+
+    @Override
+    public <T> List<T> executeNamedQuery(String query, Map<String, Object> namedParameters, RowMapper<T> rowMapper) throws Exception {
+        return jdbcTemplate.query(query, namedParameters, rowMapper);
+    }
+
+   /* @Override
     public SqlRowSet executeNamedQuery(String query, MapSqlParameterSource namedParameters) throws Exception {
         return jdbcTemplate.queryForRowSet(query, namedParameters);
     }
@@ -36,11 +52,6 @@ public class DaoServiceImpl implements DaoService {
         Connection connection = dataSource.getConnection();
         PreparedStatement statement = connection.prepareStatement(query);
         return statement.executeQuery();
-    }
-
-    @Override
-    public <T> T executeNamedQueryForSingleResult(String query, MapSqlParameterSource namedParameters, RowMapper<T> rowMapper) throws Exception {
-        return jdbcTemplate.queryForObject(query, namedParameters, rowMapper);
     }
 
     @Override
@@ -56,16 +67,6 @@ public class DaoServiceImpl implements DaoService {
     @Override
     public <T> T executeNamedQueryForSingleResult(String query, Map<String, Object> namedParameters, Class<T> t) throws Exception {
         return jdbcTemplate.queryForObject(query, namedParameters, t);
-    }
-
-    @Override
-    public <T> List<T> executeNamedQuery(String query, MapSqlParameterSource namedParameters, RowMapper<T> rowMapper) throws Exception {
-        return jdbcTemplate.query(query, namedParameters, rowMapper);
-    }
-
-    @Override
-    public <T> List<T> executeNamedQuery(String query, Map<String, Object> namedParameters, RowMapper<T> rowMapper) throws Exception {
-        return jdbcTemplate.query(query, namedParameters, rowMapper);
     }
 
     @Override
@@ -99,6 +100,6 @@ public class DaoServiceImpl implements DaoService {
     @Override
     public int executeNamedUpdate(String query, Map<String, Object> namedParameters) {
         return jdbcTemplate.update(query, namedParameters);
-    }
+    }*/
 
 }

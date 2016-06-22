@@ -20,7 +20,9 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public List<Review> getByMovieId(int movieId) {
-        log.info("Retrieving review from DB by mowie id {} ", movieId);
-        return reviewDao.getByMovieId(movieId);
+        log.info("Start retrieving review from DB by mowie id {} ", movieId);
+        List<Review> reviewList = reviewDao.getByMovieId(movieId);
+        log.info("Finish retrieving review from DB by mowie id {} ", movieId);
+    return     reviewList;
     }
 }

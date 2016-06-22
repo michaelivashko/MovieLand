@@ -17,7 +17,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/v1/movies")
 public class MovieController {
-  //  private final Logger log = LoggerFactory.getLogger(getClass());
+    private final Logger log = LoggerFactory.getLogger(getClass());
 
     @Autowired
     private MovieService movieService;
@@ -30,6 +30,14 @@ public class MovieController {
     public String getAllMovies() {
         List<Movie> movies = movieService.getAll();
         return jsonConverter.toJson(movies);
+    }
+
+    public ResponseEntity<String> getAllMovies(@RequestParam(value = "rating", required = false) String ratingOrder,
+                                               @RequestParam(value = "price", required = false) String priceOrder) {
+        List<Movie> movies = movieService.getAll();
+        String json = jsonConverter.toJson(movies);
+        return movies.isEmpty()? new ResponseEntity<>(json, HttpStatus.OK)
+                : new ResponseEntity<>("Movies missing in the database", HttpStatus.NO_CONTENT);
     }
 
     @RequestMapping(value = "/{movieId}", produces = "text/plain;charset=UTF-8")
@@ -45,8 +53,7 @@ public class MovieController {
         Search searchParams = jsonConverter.parse(json);
         List<Movie> movies = movieService.search(searchParams);
         if (movies.isEmpty()) {
-            return new ResponseEntity<>("Movies not found", HttpStatus.BAD_REQUEST); //change
-        }
+            return new ResponseEntity<>("Movies not found", HttpStatus.NO_CONTENT);         }
         String jsonResponse = jsonConverter.toJson(movies);
         return new ResponseEntity<>(jsonResponse, HttpStatus.OK);
     }

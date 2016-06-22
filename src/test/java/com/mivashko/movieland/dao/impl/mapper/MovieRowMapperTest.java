@@ -28,4 +28,20 @@ public class MovieRowMapperTest {
         assertEquals(movie.getRating(), 2.0, 0.001);
         assertEquals(movie.getGenres(), Arrays.asList("Genre1,Genre2"));
     }
+
+    @Test
+    public void mapRowWithProperMovieTest() throws SQLException {
+        ResultSet resultSet = mock(ResultSet.class);
+        when(resultSet.getInt(anyString())).thenReturn(2016);
+        when(resultSet.getString(anyString())).thenReturn("Super").
+                thenReturn("Test");
+        when(resultSet.getDouble(anyString())).thenReturn(9.2);
+        MovieRowMapper mapper = new MovieRowMapper();
+        Movie movie = mapper.mapRow(resultSet, 0);
+        assertEquals("Super", movie.getNameRus());
+        assertEquals("Test", movie.getNameEng());
+        assertEquals(2016, movie.getYear());
+        assertEquals(9.2, movie.getRating(), 0.001);
+    }
+
 }

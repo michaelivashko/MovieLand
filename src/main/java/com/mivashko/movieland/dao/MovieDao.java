@@ -8,7 +8,6 @@ import java.util.List;
 public interface MovieDao {
     List<Movie> getAll();
     Movie getMovieById(int movieId);
-   // List<String> getReviewById(int reviewId);
     List<Movie> search(Search search);
 
 

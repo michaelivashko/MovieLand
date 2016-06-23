@@ -40,7 +40,7 @@ public class JsonConverter {
 
     public String toJson(List<Movie> movies) {
         Gson gson = new Gson();
-        List<JsonObject> list = new ArrayList<JsonObject>();
+        List<JsonObject> list = new ArrayList<>();
         for (Movie movie : movies) {
             list.add(toSimpleJson(movie));
         } return gson.toJson(list);

@@ -31,9 +31,9 @@ public class MovieDaoImpl implements MovieDao {
             " ON t1.id = t2.movie_id LEFT JOIN genre t3 ON t2.genre_id = t3.id GROUP BY t1.id, t1.name, t1.name_original, t1.release_year, t1.rating";
 
     private final String QUERY_GET_MOVIES_BY_ID =  "select  m.name name_rus,	m.name_original name_eng,m.description," +
-            "m.release_year year, rating,group_concat(g.name separator ', ') as genres,	group_concat(distinct co.name separator ', ') as countries"+
-            "from movie m     join movie_genre gm     on m.id = gm.movie_id    join genre g  on gm.genre_id = g.id    join movie_country cm     on m.id = cm.movie_id    join country co"+
-            "on co.id = cm.country_id    where m.id = :id    group by 1,2,3,4,5";
+            " m.release_year year, rating,group_concat(g.name separator ', ') as genres,	group_concat(distinct co.name separator ', ') as countries"+
+            " from movie m     join movie_genre gm     on m.id = gm.movie_id    join genre g  on gm.genre_id = g.id    join movie_country cm     on m.id = cm.movie_id    join country co"+
+            " on co.id = cm.country_id    where m.id = :id    group by 1,2,3,4,5";
 
     @Autowired
     private ReviewService reviewService;

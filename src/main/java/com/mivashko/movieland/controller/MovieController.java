@@ -35,14 +35,20 @@ public class MovieController {
         List<Movie> movies = movieService.getAll(ratingOrder, priceOrder);
         String json = jsonConverter.toJson(movies);
         return movies.isEmpty()? new ResponseEntity<>("Movies missing in the database",
-                HttpStatus.NO_CONTENT) :
-                new ResponseEntity<>(json, HttpStatus.OK );
+                HttpStatus.NO_CONTENT) :  new ResponseEntity<>(json, HttpStatus.OK );
     }
 
     @RequestMapping(value = "/movies/{movieId}", method = RequestMethod.GET, produces = "text/plain;charset=UTF-8")
     @ResponseBody
     public String getMoviesById(@PathVariable("movieId") int movieId) throws Exception {
+        log.info("Received request for retriewing movie with id {} ", movieId);
+
         Movie movie = movieService.getMovieById(movieId);
+        if (movie == null) {
+            log.warn("Movie not found by id={}", movieId);
+            return null;
+        }
+        log.debug("Received movie, id={}", movieId);
         return jsonConverter.toVerboseJson(movie);
     }
 

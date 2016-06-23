@@ -42,7 +42,7 @@ public class DaoServiceImpl implements DaoService {
         return jdbcTemplate.query(query, namedParameters, rowMapper);
     }
 
-   /* @Override
+    @Override
     public SqlRowSet executeNamedQuery(String query, MapSqlParameterSource namedParameters) throws Exception {
         return jdbcTemplate.queryForRowSet(query, namedParameters);
     }
@@ -100,6 +100,6 @@ public class DaoServiceImpl implements DaoService {
     @Override
     public int executeNamedUpdate(String query, Map<String, Object> namedParameters) {
         return jdbcTemplate.update(query, namedParameters);
-    }*/
+    }
 
 }

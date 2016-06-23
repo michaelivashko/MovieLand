@@ -1,6 +1,8 @@
 package com.mivashko.movieland.util;
+import com.google.gson.JsonSyntaxException;
 import com.mivashko.movieland.entity.Movie;
 import com.mivashko.movieland.entity.SqlParam;
+import com.mivashko.movieland.exceptions.IncorrectJsonParsing;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -47,7 +49,10 @@ public class JsonConverter {
     public SqlParam parse (String json) {
         Gson gson = new Gson();
         try {   return gson.fromJson(json, SqlParam.class);
-        } catch (Exception e) { throw e; }
+        } catch (JsonSyntaxException e) {
+            log.info("Error while parsing json");
+            throw new IncorrectJsonParsing("Invalid json request", e);
+        }
     }
 
 }

@@ -23,10 +23,10 @@ public class JsonConverterTest {
 
   @Test
   public void testParseSearchParams() {
-      String json = "{\"genre\": \"ggg\", \"country\": \"США\", \"rusName\": \"Test\", \"engName\": \"Test\", \"year\": \"1666\"}";
+      String json = "{\"genre\": \"ggg\", \"country\": \"w\", \"rusName\": \"Test\", \"engName\": \"Test\", \"year\": \"1666\"}";
       SqlParam params = jsonConverter.parse(json);
       assertEquals(params.getGenre(), "ggg");
-      assertEquals(params.getCountry(), "США");
+      assertEquals(params.getCountry(), "w");
       assertEquals(params.getRusName(), "Test");
       assertEquals(params.getEngName(), "Test");
   }

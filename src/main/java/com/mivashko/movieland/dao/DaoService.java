@@ -13,7 +13,7 @@ public interface DaoService {
     <T> List<T> executeNamedQuery(String query, MapSqlParameterSource namedParameters, RowMapper<T> rowMapper) throws Exception;
     <T> List<T> executeNamedQuery(String query, Map<String, Object> namedParameters, RowMapper<T> rowMapper) throws Exception;
 
- /*   SqlRowSet executeNamedQuery(String query, MapSqlParameterSource namedParameters) throws Exception;
+    SqlRowSet executeNamedQuery(String query, MapSqlParameterSource namedParameters) throws Exception;
     ResultSet executeQuery(String query) throws Exception;
     <T> T executeNamedQueryForSingleResult(String query, Map<String, Object> namedParameters, RowMapper<T> rowMapper) throws Exception;
     <T> T executeNamedQueryForSingleResult(String query, MapSqlParameterSource namedParameters, Class<T> t) throws Exception;
@@ -21,5 +21,5 @@ public interface DaoService {
     int executeUpdate(String query) throws Exception;
     void executeUpdates(List<String> queries) throws Exception;
     int executeNamedUpdate(String query, MapSqlParameterSource namedParameters);
-    int executeNamedUpdate(String query, Map<String, Object> namedParameters);*/
+    int executeNamedUpdate(String query, Map<String, Object> namedParameters);
 }

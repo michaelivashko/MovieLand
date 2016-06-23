@@ -15,8 +15,8 @@ public class QueryBuilder {
         if (params.getPriceOrder() != null) {
             result = result + " price " + params.getRatingOrder();  }
         else {
-            return null; }
-
+            return queryGetAllMovie;
+        }
         return queryGetAllMovie + result;
     }
 }

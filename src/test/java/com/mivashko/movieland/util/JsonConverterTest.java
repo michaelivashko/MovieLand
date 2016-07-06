@@ -2,11 +2,11 @@ package com.mivashko.movieland.util;
 
 import com.mivashko.movieland.entity.Movie;
 import com.mivashko.movieland.entity.Review;
-import com.mivashko.movieland.entity.SqlParam;
+import com.mivashko.movieland.util.json.AdditionSqlParam;
 import com.mivashko.movieland.entity.User;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import java.util.ArrayList;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -24,7 +24,7 @@ public class JsonConverterTest {
   @Test
   public void testParseSearchParams() {
       String json = "{\"genre\": \"ggg\", \"country\": \"w\", \"rusName\": \"Test\", \"engName\": \"Test\", \"year\": \"1666\"}";
-      SqlParam params = jsonConverter.parse(json);
+      AdditionSqlParam params = jsonConverter.parse(json);
       assertEquals(params.getGenre(), "ggg");
       assertEquals(params.getCountry(), "w");
       assertEquals(params.getRusName(), "Test");

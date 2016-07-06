@@ -1,6 +1,6 @@
-package com.mivashko.movieland.entity;
+package com.mivashko.movieland.util.json;
 
-public class SqlParam {
+public class AdditionSqlParam {
     private String rusName;
     private String engName;
     private String year;

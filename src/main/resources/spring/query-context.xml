@@ -4,48 +4,4 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="queryGetMoviesById" class="java.lang.String">
-        <constructor-arg value=
-       "select  m.name name_rus,
-		m.name_original name_eng,
-		m.description,
-		m.release_year year,
-		rating,
-		group_concat(g.name separator ', ') as genres,
-		group_concat(distinct co.name separator ', ') as countries
-        from movie m
-        join movie_genre gm
-        on m.id = gm.movie_id
-        join genre g
-        on gm.genre_id = g.id
-        join movie_country cm
-        on m.id = cm.movie_id
-        join country co
-        on co.id = cm.country_id
-        where m.id = :id
-        group by 1,2,3,4,5;"/>
-    </bean>
-
-    <bean id="queryGetBySearchParam" class="java.lang.String">
-        <constructor-arg value="select  m.name name_rus,
-		m.name_original name_eng,
-		m.description,
-		m.release_year year,
-		rating,
-		group_concat(g.name separator ', ') as genres,
-		group_concat(distinct co.name separator ', ') as countries
-        from movie m
-        join movie_genre gm
-        on m.id = gm.movie_id
-        join genre g
-        on gm.genre_id = g.id
-        join movie_country cm
-        on m.id = cm.movie_id
-        join country co
-        on co.id = cm.country_id
-        where m.name_original =:name_original
-        and m.release_year = :release_year
-        group by 1,2,3,4,5"/>
-    </bean>
-
 </beans>

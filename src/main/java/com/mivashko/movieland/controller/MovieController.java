@@ -1,7 +1,8 @@
 package com.mivashko.movieland.controller;
 
 import com.mivashko.movieland.entity.Movie;
-import com.mivashko.movieland.entity.SqlParam;
+import com.mivashko.movieland.util.json.AdditionSqlParam;
+import com.mivashko.movieland.exceptions.NoDataFound;
 import com.mivashko.movieland.service.MovieService;
 import com.mivashko.movieland.util.JsonConverter;
 import org.slf4j.Logger;
@@ -29,10 +30,15 @@ public class MovieController {
     @ResponseBody
     public ResponseEntity<String> getAllMovies(
             @RequestParam(value = "rating", required = false) String ratingOrder,
-            @RequestParam(value = "price", required = false) String priceOrder) throws Exception {
+            @RequestParam(value = "price", required = false) String priceOrder,
+            @RequestParam(value = "page", defaultValue = "1" ) String page) throws Exception {
         log.info("Start request for all movies");
-
-        List<Movie> movies = movieService.getAll(ratingOrder, priceOrder);
+        List<Movie> movies = null;
+        try {
+            movies = movieService.getAll(ratingOrder, priceOrder);
+        } catch (NoDataFound e) {
+            e.printStackTrace();
+        }
         String json = jsonConverter.toJson(movies);
         return movies.isEmpty()? new ResponseEntity<>("Movies missing in the database",
                 HttpStatus.NO_CONTENT) :  new ResponseEntity<>(json, HttpStatus.OK );
@@ -55,14 +61,11 @@ public class MovieController {
     @RequestMapping(value = "/movies/search", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
     @ResponseBody
     public ResponseEntity<String> searchMovies(@RequestBody String json) throws Exception {
-        SqlParam searchParams = jsonConverter.parse(json);
+        AdditionSqlParam searchParams = jsonConverter.parse(json);
         List<Movie> movies = movieService.search(searchParams);
         if (movies.isEmpty()) {
             return new ResponseEntity<>("Movies not found", HttpStatus.NO_CONTENT);         }
         String jsonResponse = jsonConverter.toJson(movies);
         return new ResponseEntity<>(jsonResponse, HttpStatus.OK);
     }
-
-
-
 }

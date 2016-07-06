@@ -3,7 +3,7 @@ package com.mivashko.movieland.service.impl;
 import com.mivashko.movieland.dao.MovieDao;
 import com.mivashko.movieland.entity.Movie;
 import com.mivashko.movieland.entity.Review;
-import com.mivashko.movieland.entity.SqlParam;
+import com.mivashko.movieland.util.json.AdditionSqlParam;
 import com.mivashko.movieland.service.MovieService;
 import com.mivashko.movieland.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,8 +31,8 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public List<Movie> search(SqlParam sqlParam) throws Exception {
-        return movieDao.search(sqlParam);
+    public List<Movie> search(AdditionSqlParam additionSqlParam) throws Exception {
+        return movieDao.search(additionSqlParam);
     }
 
 }

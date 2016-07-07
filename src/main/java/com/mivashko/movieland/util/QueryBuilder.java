@@ -2,8 +2,10 @@ package com.mivashko.movieland.util;
 import com.mivashko.movieland.util.json.AdditionSqlParam;
 
 public class QueryBuilder {
+    private final int PAGE_SIZE = 5;
 
-    public static String buildQueryWithSorting(String queryGetAllMovie, AdditionSqlParam params) {
+
+    public static String buildSortedPagedQuery(String queryGetAllMovie, AdditionSqlParam params) {
         String result = " ORDER BY ";
         if (params.getRatingOrder() != null  &&  params.getPriceOrder() != null  ) {
             result = result + " rating " + params.getRatingOrder() + " , "

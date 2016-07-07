@@ -61,7 +61,7 @@ public class MovieDaoImpl implements MovieDao {
 /*        AdditionSqlParam additionSqlParam = new AdditionSqlParam();
         additionSqlParam.setRatingOrder(ratingOrder);
         additionSqlParam.setPriceOrder(priceOrder);*/
-        List<Movie> movies = jdbcTemplate.query(QueryBuilder.buildQueryWithSorting(
+        List<Movie> movies = jdbcTemplate.query(QueryBuilder.buildSortedPagedQuery(
                 QUERY_GET_ALL_MOVIE, additionSqlParam),movieRowMapper);
         log.info("Finish query for getting  all movie from DB");
         return movies;

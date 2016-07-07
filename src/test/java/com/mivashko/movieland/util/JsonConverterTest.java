@@ -2,8 +2,8 @@ package com.mivashko.movieland.util;
 
 import com.mivashko.movieland.entity.Movie;
 import com.mivashko.movieland.entity.Review;
-import com.mivashko.movieland.util.json.AdditionSqlParam;
 import com.mivashko.movieland.entity.User;
+import com.mivashko.movieland.util.json.AdditionSqlParam;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -53,7 +53,6 @@ public class JsonConverterTest {
         review.setText("reviewText");
         List<Review> reviews = Arrays.asList(review, review);
         movie.setReviewList(reviews);
-
        // movie.setReviewList(Arrays.asList("1", "1"));
         assertEquals(expectedJson, json.toSimpleJson(movie).toString());
     }

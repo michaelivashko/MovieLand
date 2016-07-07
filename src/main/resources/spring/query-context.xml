@@ -4,4 +4,16 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd">
 
+<!--    create table movie_poster(
+    movie_id int,
+    image blob,
+    primary key (movie_id)
+    );
+    INSERT INTO movie_poster(movie_id,image) VALUE(3, LOAD_FILE('D:\!MY_JAVA\image.jpg'));-->
+
+    <bean id="getPosterSQL" class="java.lang.String">
+        <constructor-arg value="SELECT image FROM movie_poster WHERE movie_id=?;"/>
+    </bean>
+
+
 </beans>

@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -34,8 +35,13 @@ public class MovieController {
             @RequestParam(value = "page", defaultValue = "1" ) String page) throws Exception {
         log.info("Start request for all movies");
         List<Movie> movies = null;
-        try {
-            movies = movieService.getAll(ratingOrder, priceOrder);
+
+        AdditionSqlParam sqlParams = new AdditionSqlParam();
+        sqlParams.setPriceOrder(priceOrder);
+        sqlParams.setRatingOrder(ratingOrder);
+        sqlParams.setPage(page);
+
+        try { movies = movieService.getAll(sqlParams);
         } catch (NoDataFound e) {
             e.printStackTrace();
         }
@@ -43,7 +49,6 @@ public class MovieController {
         return movies.isEmpty()? new ResponseEntity<>("Movies missing in the database",
                 HttpStatus.NO_CONTENT) :  new ResponseEntity<>(json, HttpStatus.OK );
     }
-
     @RequestMapping(value = "/movies/{movieId}", method = RequestMethod.GET, produces = "text/plain;charset=UTF-8")
     @ResponseBody
     public String getMoviesById(@PathVariable("movieId") int movieId) throws Exception {
@@ -67,5 +72,15 @@ public class MovieController {
             return new ResponseEntity<>("Movies not found", HttpStatus.NO_CONTENT);         }
         String jsonResponse = jsonConverter.toJson(movies);
         return new ResponseEntity<>(jsonResponse, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/movies/poster/{movieId}", method = RequestMethod.GET, produces = MediaType.IMAGE_JPEG_VALUE)
+    @ResponseBody
+    public ResponseEntity<byte[]> getPoster(@PathVariable int movieId) {
+        byte[] poster = movieService.getPoster(movieId);
+        if (poster == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(poster, HttpStatus.OK);
     }
 }

@@ -8,6 +8,7 @@ public class AdditionSqlParam {
     private String genre;
     private String ratingOrder;
     private String priceOrder;
+    private String page;
 
     public String getRusName() {
         return rusName;
@@ -66,5 +67,10 @@ public class AdditionSqlParam {
 
     public String getPriceOrder() {
         return priceOrder;
+    }
+
+    public void setPage(String page) {
+        this.page = page;
+
     }
 }

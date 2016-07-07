@@ -19,8 +19,8 @@ public class MovieServiceImpl implements MovieService {
     @Autowired
     private ReviewService reviewService;
 
-    public List<Movie> getAll(String ratingOrder, String priceOrder) throws Exception {
-        return movieDao.getAll(ratingOrder, priceOrder);
+    public List<Movie> getAll(AdditionSqlParam sqlParam) throws Exception {
+        return movieDao.getAll(sqlParam);
     }
 
     public Movie getMovieById(int movieId) throws Exception {
@@ -33,6 +33,11 @@ public class MovieServiceImpl implements MovieService {
     @Override
     public List<Movie> search(AdditionSqlParam additionSqlParam) throws Exception {
         return movieDao.search(additionSqlParam);
+    }
+
+    @Override
+    public byte[] getPoster(int movieId) {
+        return movieDao.getPoster(movieId);
     }
 
 }

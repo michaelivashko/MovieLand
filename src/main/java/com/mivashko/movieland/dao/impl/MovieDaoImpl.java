@@ -1,5 +1,6 @@
 package com.mivashko.movieland.dao.impl;
 import com.mivashko.movieland.dao.MovieDao;
+import com.mivashko.movieland.dao.impl.mapper.MoviePosterRowMapper;
 import com.mivashko.movieland.dao.impl.mapper.MovieRowMapper;
 import com.mivashko.movieland.dao.impl.mapper.VerboseMovieRowMapper;
 import com.mivashko.movieland.entity.Movie;
@@ -9,6 +10,7 @@ import com.mivashko.movieland.util.QueryBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.stereotype.Repository;
@@ -20,6 +22,12 @@ public class MovieDaoImpl implements MovieDao {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
+
+    @Autowired
+    private String getPosterSQL;
+
+    private final MoviePosterRowMapper posterRowMapper
+            = new MoviePosterRowMapper();
 
     private final String QUERY_GET_ALL_MOVIE =
         " SELECT * FROM (SELECT t1.id, t1.name name_rus, "+
@@ -48,11 +56,11 @@ public class MovieDaoImpl implements MovieDao {
     private final QueryBuilder queryBuilder = new QueryBuilder();
 
     @Override
-    public List<Movie> getAll(String ratingOrder, String priceOrder) throws Exception{
+    public List<Movie> getAll(AdditionSqlParam additionSqlParam) throws Exception{
         log.info("Start query for getting  all movie from DB with sorting");
-        AdditionSqlParam additionSqlParam = new AdditionSqlParam();
+/*        AdditionSqlParam additionSqlParam = new AdditionSqlParam();
         additionSqlParam.setRatingOrder(ratingOrder);
-        additionSqlParam.setPriceOrder(priceOrder);
+        additionSqlParam.setPriceOrder(priceOrder);*/
         List<Movie> movies = jdbcTemplate.query(QueryBuilder.buildQueryWithSorting(
                 QUERY_GET_ALL_MOVIE, additionSqlParam),movieRowMapper);
         log.info("Finish query for getting  all movie from DB");
@@ -79,10 +87,25 @@ public class MovieDaoImpl implements MovieDao {
         MapSqlParameterSource parameter = new MapSqlParameterSource();
         parameter.addValue("name_original", additionSqlParam.getEngName());
         parameter.addValue("release_year", additionSqlParam.getYear());
+
         List<Movie> movieList = jdbcTemplate.query(queryBuilder.buildSearchQuery(
         additionSqlParam, QUERY_GET_ALL_MOVIE), movieRowMapper);
+
         log.info("Finish query for search movie");
         return movieList;
     }
+
+    @Override
+    public byte[] getPoster(int movieId) {
+        byte[] fileBytes = null;
+        try {
+            fileBytes = jdbcTemplate.queryForObject(getPosterSQL, posterRowMapper, movieId);
+        } catch (EmptyResultDataAccessException e) {
+            log.warn("Poster for movie id = {} doesn't exist in database", movieId);
+        }
+        return fileBytes;
+    }
+
+
 }
 
